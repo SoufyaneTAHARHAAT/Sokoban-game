@@ -74,6 +74,8 @@ public class Jeu extends Observable {
         Bloc b = new Bloc(this, grilleEntites[6][6]);
         CaseObjectif caseObj = new CaseObjectif(this);
         addCase(caseObj, 2, 2);
+
+        BlocObjectif blocObj = new BlocObjectif(this, grilleEntites[7][7]);
     }
 
     private void addCase(Case e, int x, int y) {
@@ -92,11 +94,15 @@ public class Jeu extends Observable {
         Point pCourant = map.get(e.getCase());
         
         Point pCible = calculerPointCible(pCourant, d);
+        Case pObjectif = grilleEntites[2][2];
 
         if (contenuDansGrille(pCible)) {
             Entite eCible = caseALaPosition(pCible).getEntite();
             if (eCible != null) {
                 eCible.pousser(d);
+                if(grilleEntites[pCible.x][pCible.y] == pObjectif){
+                    System.out.println("YOU WON ! ");
+                }
             }
 
             // si la case est libérée

@@ -5,6 +5,6 @@ public class CaseObjectif extends Vide {
 
     @Override
     public boolean peutEtreParcouru() {
-        return false;
+        return true;
     }
 }
