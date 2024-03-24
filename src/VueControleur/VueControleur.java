@@ -25,6 +25,7 @@ import modele.*;
 public class VueControleur extends JFrame implements Observer {
     private Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
 
+    private boolean joueurGagne = false;
     private int sizeX; // taille de la grille affichée
     private int sizeY;
 
@@ -79,7 +80,7 @@ public class VueControleur extends JFrame implements Observer {
         icoMur = chargerIcone("Images/Mur.png");
         icoBloc = chargerIcone("Images/Colonne.png");
         icoCaseObjectif = chargerIcone("Images/CaseObjectif.png");
-        icoBlocObjectif = chargerIcone("Images/BlocObjectif.png");
+        icoBlocObjectif = chargerIcone("Images/ima.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -156,11 +157,22 @@ public class VueControleur extends JFrame implements Observer {
 
             }
         }
+        if (joueurGagne) {
+            JOptionPane.showMessageDialog(this, "YOU WON !");
+            joueurGagne = false; // Réinitialise l'état du joueur
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
+
         mettreAJourAffichage();
+        if (jeu.isJoueurGagne()) {
+            JOptionPane.showMessageDialog(this, "YOU WON !");
+        //    jeu.setJoueurGagne(false); // Reset the win state
+        }
+
+
         /*
 
         // récupérer le processus graphique pour rafraichir

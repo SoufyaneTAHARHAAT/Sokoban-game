@@ -23,13 +23,19 @@ public class Jeu extends Observable {
     private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
     private Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
-
+    private boolean joueurGagne = false;
 
     public Jeu() {
         initialisationNiveau();
     }
 
+    public boolean isJoueurGagne() {
+        return joueurGagne;
+    }
 
+    private void setJoueurGagne(boolean joueurGagne) {
+        this.joueurGagne = joueurGagne;
+    }
     
     public Case[][] getGrille() {
         return grilleEntites;
@@ -94,14 +100,18 @@ public class Jeu extends Observable {
         Point pCourant = map.get(e.getCase());
         
         Point pCible = calculerPointCible(pCourant, d);
-        Case pObjectif = grilleEntites[2][2];
+        Case pCaseObjectif = grilleEntites[2][2];
 
         if (contenuDansGrille(pCible)) {
             Entite eCible = caseALaPosition(pCible).getEntite();
             if (eCible != null) {
                 eCible.pousser(d);
-                if(grilleEntites[pCible.x][pCible.y] == pObjectif){
-                    System.out.println("YOU WON ! ");
+                Point pBlocObjCourante = map.get(eCible.getCase());
+
+                if(grilleEntites[pBlocObjCourante.x][pBlocObjCourante.y] == pCaseObjectif){
+                    setJoueurGagne(true);
+                    setChanged();
+                    notifyObservers();
                 }
             }
 
