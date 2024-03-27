@@ -12,3 +12,9 @@ public class Bloc extends Entite {
     }
 
 }
+
+/**
+ * - Cette classe hérite de Entité => son constructeur doit appeller
+ *   celle de Entite pour lui passer le jeu ainsi que la case qui va
+ *   contenir cette bloc
+ * */

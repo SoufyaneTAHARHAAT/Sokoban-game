@@ -36,3 +36,14 @@ public abstract class Entite extends Obj {
     }
 
 }
+
+/**
+ * - Entités amenées à bouger. ex: bloc, héro etc
+ * - La classe entité hérite d'Obj
+ * - la classe Entité contient un donnée membre de type case qui contient
+ *   l'entité
+ * - le constructeur de Entite stocke la case qui la contienne ET informe
+ *   aussi la case qui la contienne en faisant "c.setEntite(this)".
+ * - "getCase" retourne la case qui contient l'entité.
+ * - "setCase" et "allerSurCase" change la case qui contient cette entité
+ * */

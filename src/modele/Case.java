@@ -44,3 +44,17 @@ public abstract class Case extends Obj {
 
 
    }
+
+   /**
+    * - la donnée membre "Entite e" contient l'élément qui est dans cette case
+    * - "boolean entrerSurLaCase" les choses à faire avant de rentrer
+    *   dans une case
+    * - "quitterLaCase" les choses à faire après avoir quitter une case
+    * - "contructeur" appelle juste le constructeur de Obj
+    * - "getEntite" renvoie juste l'élément qui est dans cette case :
+    *   son donnée membre "Entite e".
+    * - "setEntite" modifie la valeur du donnée membre entité.
+    * */
+   /*
+   * Obj -> Case
+   * */

@@ -25,7 +25,6 @@ import modele.*;
 public class VueControleur extends JFrame implements Observer {
     private Jeu jeu; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
 
-    private boolean joueurGagne = false;
     private int sizeX; // taille de la grille affichée
     private int sizeY;
 
@@ -34,16 +33,16 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoVide;
     private ImageIcon icoMur;
     private ImageIcon icoBloc;
-    private ImageIcon icoCaseObjectif;
     private ImageIcon icoBlocObjectif;
+    private ImageIcon icoCaseObjectif;
 
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
 
     public VueControleur(Jeu _jeu) {
-        sizeX = jeu.SIZE_X;
-        sizeY = _jeu.SIZE_Y;
+        sizeX = Jeu.SIZE_X;
+        sizeY = Jeu.SIZE_Y;
         jeu = _jeu;
 
         chargerLesIcones();
@@ -79,8 +78,8 @@ public class VueControleur extends JFrame implements Observer {
         icoVide = chargerIcone("Images/Vide.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoBloc = chargerIcone("Images/Colonne.png");
+        icoBlocObjectif = chargerIcone("Images/BlocObjectif.png");
         icoCaseObjectif = chargerIcone("Images/CaseObjectif.png");
-        icoBlocObjectif = chargerIcone("Images/ima.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -148,7 +147,6 @@ public class VueControleur extends JFrame implements Observer {
                         } else if (jeu.getGrille()[x][y] instanceof Vide) {
                             tabJLabel[x][y].setIcon(icoVide);
                         }
-
                     }
 
 
@@ -157,21 +155,17 @@ public class VueControleur extends JFrame implements Observer {
 
             }
         }
-        if (joueurGagne) {
-            JOptionPane.showMessageDialog(this, "YOU WON !");
-            joueurGagne = false; // Réinitialise l'état du joueur
-        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
         mettreAJourAffichage();
-        if (jeu.isJoueurGagne()) {
-            JOptionPane.showMessageDialog(this, "YOU WON !");
-        //    jeu.setJoueurGagne(false); // Reset the win state
+        if(jeu.FinJeu()){
+            JOptionPane.showMessageDialog(this,"Fin du jeu !!!");
+            jeu.CompteurNiveau = (jeu.CompteurNiveau + 1) % jeu.TabFichierNiveau.length;
+            jeu.initialisationNiveau(jeu.CompteurNiveau);
+            //System.out.println("Fin de Jeu !!!");
         }
-
 
         /*
 
