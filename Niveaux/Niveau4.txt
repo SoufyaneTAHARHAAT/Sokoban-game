@@ -1,9 +1,9 @@
 MMMMMMMMMMMMMMMMMMMM
 M                  M
-M        BBB       M
+M        MM        M
 M                  M
-M   BBB  H   B     M
+M   O    H   B     M
 M                  M
-M    O  B   X      M
+M    O  B  XXXX    M
 M                  M
 MMMMMMMMMMMMMMMMMMMM

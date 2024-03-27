@@ -12,6 +12,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.BorderLayout;// pour l'affichage en haut à droite du nbre de pas
+
+
 
 
 import modele.*;
@@ -38,6 +41,7 @@ public class VueControleur extends JFrame implements Observer {
 
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
+    private JLabel pasLabel; //pour afficher le numéro de pas
 
 
     public VueControleur(Jeu _jeu) {
@@ -104,6 +108,9 @@ public class VueControleur extends JFrame implements Observer {
 
         tabJLabel = new JLabel[sizeX][sizeY];
 
+        pasLabel = new JLabel("Pas: 0");
+        add(pasLabel, BorderLayout.NORTH); // Ajoutez le JLabel au nord de la fenêtre
+
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
                 JLabel jlab = new JLabel();
@@ -119,8 +126,6 @@ public class VueControleur extends JFrame implements Observer {
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabJLabel)
      */
     private void mettreAJourAffichage() {
-
-
 
         for (int x = 0; x < sizeX; x++) {
             for (int y = 0; y < sizeY; y++) {
@@ -155,16 +160,25 @@ public class VueControleur extends JFrame implements Observer {
 
             }
         }
+        pasLabel.setText("Pas: " + jeu.getCompteurPasHero());
     }
 
     @Override
     public void update(Observable o, Object arg) {
+
         mettreAJourAffichage();
-        if(jeu.FinJeu()){
-            JOptionPane.showMessageDialog(this,"Fin du jeu !!!");
-            jeu.CompteurNiveau = (jeu.CompteurNiveau + 1) % jeu.TabFichierNiveau.length;
-            jeu.initialisationNiveau(jeu.CompteurNiveau);
-            //System.out.println("Fin de Jeu !!!");
+
+        if (jeu.FinJeu()) {
+            int choix = JOptionPane.showOptionDialog(this, "Bravo ! Niveau réussi. Voulez-vous passer au niveau suivant ?", "Niveau terminé", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Passer au niveau suivant", "Quitter"}, null);
+
+            if (choix == JOptionPane.YES_OPTION) {
+                // L'utilisateur a choisi de passer au niveau suivant
+                jeu.CompteurNiveau = (jeu.CompteurNiveau + 1) % jeu.TabFichierNiveau.length;
+                jeu.initialisationNiveau(jeu.CompteurNiveau);
+            } else if (choix == JOptionPane.NO_OPTION) {
+                // L'utilisateur a choisi de quitter le jeu
+                System.exit(0);
+            }
         }
 
         /*

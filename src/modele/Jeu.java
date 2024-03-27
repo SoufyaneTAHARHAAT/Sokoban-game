@@ -27,11 +27,20 @@ public class Jeu extends Observable {
 
     public String[] TabFichierNiveau;
     public int CompteurNiveau = 0;
+    private int compteurPasHero = 0;
+
+    public int getCompteurPasHero() {
+        return compteurPasHero;
+    }
 
     public Jeu() {
-        TabFichierNiveau = new String[5];
-        TabFichierNiveau[0] = "Niveaux/Niveau1.txt";
-        TabFichierNiveau[1] = "Niveaux/Niveau2.txt";
+        int nombreNiveaux = 5;
+        TabFichierNiveau = new String[nombreNiveaux];
+
+        for (int i = 0; i < nombreNiveaux; i++) {
+            TabFichierNiveau[i] = "Niveaux/Niveau" + i + ".txt";
+        }
+
         initialisationNiveau(CompteurNiveau);
     }
 
@@ -53,6 +62,7 @@ public class Jeu extends Observable {
     public void deplacerHeros(Direction d) {
         heros.avancerDirectionChoisie(d);
         setChanged();
+        compteurPasHero ++;// Compteur de pas du heros qui s'incremente avec chaque deplacement
         notifyObservers();
     }
     /**
@@ -179,6 +189,7 @@ public class Jeu extends Observable {
                 return false;
             }
         }
+        compteurPasHero = -1;
         return true;
     }
 
