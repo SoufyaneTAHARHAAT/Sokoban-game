@@ -169,7 +169,7 @@ public class VueControleur extends JFrame implements Observer {
         mettreAJourAffichage();
 
         if (jeu.FinJeu()) {
-            int choix = JOptionPane.showOptionDialog(this, "Bravo ! Niveau réussi. Voulez-vous passer au niveau suivant ?", "Niveau terminé", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Passer au niveau suivant", "Quitter"}, null);
+            int choix = JOptionPane.showOptionDialog(this, "Bravo ! Selectionner niveau suivant et appyuer sur une direction quelconque ?", "Niveau terminé", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Niveau suivant", "Quitter"}, null);
 
             if (choix == JOptionPane.YES_OPTION) {
                 // L'utilisateur a choisi de passer au niveau suivant
