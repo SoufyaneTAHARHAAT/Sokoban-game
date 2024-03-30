@@ -59,6 +59,7 @@ public class Jeu extends Observable {
     /**
      * "getHeros" return le Heros*/
 
+
     public void deplacerHeros(Direction d) {
         heros.avancerDirectionChoisie(d);
         setChanged();
@@ -96,6 +97,9 @@ public class Jeu extends Observable {
                     addCase(new Vide(this), x, y);
                     Bloc b = new BlocObjectif(this, grilleEntites[x][y]);
                 }
+                if(tabNiveau.tab[x][y]=='G'){
+                    addCase(new Glace(this), x, y);
+                }
             }
         }
     }
@@ -132,6 +136,18 @@ public class Jeu extends Observable {
                 e.getCase().quitterLaCase(); // les choses à faire avant de quitter l'ancienne case
                 caseALaPosition(pCible).entrerSurLaCase(e); // les choses à faire avant de rentrer dans la nouvelle case
 
+            }
+            // Vérifier si la case cible est une Case Glace
+            if (caseALaPosition(pCible) instanceof Glace) {
+                // Si c'est le cas, on effectue un deuxième déplacement dans la même direction
+                Point pCibleSecondaire = calculerPointCible(pCible, d);
+                if (contenuDansGrille(pCibleSecondaire) && caseALaPosition(pCibleSecondaire).peutEtreParcouru()) {
+                    // Effectuer le deuxième déplacement
+                    e.getCase().quitterLaCase();
+                    caseALaPosition(pCibleSecondaire).entrerSurLaCase(e);
+                } else {
+                    retour = false; // Le deuxième déplacement n'est pas possible
+                }
             } else {
                 retour = false;
             }
@@ -184,8 +200,8 @@ public class Jeu extends Observable {
 
     //Fonction pour verifier la fin du jeu
     public boolean FinJeu(){
-        for (int i=0; i< TabCaseObjectif.size(); i++){
-            if(!(TabCaseObjectif.get(i).e instanceof BlocObjectif)){
+        for (CaseObjectif caseObjectif : TabCaseObjectif) {
+            if (!(caseObjectif.e instanceof BlocObjectif)) {
                 return false;
             }
         }

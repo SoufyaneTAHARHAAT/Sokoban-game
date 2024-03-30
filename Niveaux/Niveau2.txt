@@ -1,8 +1,8 @@
 MMMMMMMMMMMMMMMMMMMM
 M                  M
-M        BBB       M
+M  O   B  G  O     M
 M                  M
-M   BBB  H   B     M
+M  X G  X  H       M
 M                  M
 M    O  B   X      M
 M                  M

@@ -17,6 +17,7 @@ import java.awt.BorderLayout;// pour l'affichage en haut à droite du nbre de pa
 
 
 
+
 import modele.*;
 
 
@@ -38,6 +39,7 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoBloc;
     private ImageIcon icoBlocObjectif;
     private ImageIcon icoCaseObjectif;
+    private ImageIcon icoGlace;
 
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
@@ -84,6 +86,7 @@ public class VueControleur extends JFrame implements Observer {
         icoBloc = chargerIcone("Images/Colonne.png");
         icoBlocObjectif = chargerIcone("Images/BlocObjectif.png");
         icoCaseObjectif = chargerIcone("Images/CaseObjectif.png");
+        icoGlace = chargerIcone("Images/Glace.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -147,15 +150,14 @@ public class VueControleur extends JFrame implements Observer {
                     } else {
                         if (jeu.getGrille()[x][y] instanceof Mur) {
                             tabJLabel[x][y].setIcon(icoMur);
+                        }  else if (jeu.getGrille()[x][y] instanceof Glace) {
+                            tabJLabel[x][y].setIcon(icoGlace);
                         } else if (jeu.getGrille()[x][y] instanceof CaseObjectif) {
                             tabJLabel[x][y].setIcon(icoCaseObjectif);
                         } else if (jeu.getGrille()[x][y] instanceof Vide) {
                             tabJLabel[x][y].setIcon(icoVide);
                         }
                     }
-
-
-
                 }
 
             }
@@ -173,7 +175,8 @@ public class VueControleur extends JFrame implements Observer {
 
             if (choix == JOptionPane.YES_OPTION) {
                 // L'utilisateur a choisi de passer au niveau suivant
-                jeu.CompteurNiveau = (jeu.CompteurNiveau + 1) % jeu.TabFichierNiveau.length;
+                jeu.CompteurNiveau++;
+
                 jeu.initialisationNiveau(jeu.CompteurNiveau);
             } else if (choix == JOptionPane.NO_OPTION) {
                 // L'utilisateur a choisi de quitter le jeu
@@ -192,8 +195,9 @@ public class VueControleur extends JFrame implements Observer {
                     public void run() {
                         mettreAJourAffichage();
                     }
-                }); 
+                });
         */
 
     }
+
 }
