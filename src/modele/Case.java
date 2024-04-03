@@ -20,6 +20,7 @@ public abstract class Case extends Obj {
         //}
 
         setEntite(e);
+        e.setCase(this); // A voir si ça ne crée pas de problème
         return true;
     }
 

@@ -22,7 +22,7 @@ public class Jeu extends Observable {
 
     private Heros heros;
 
-    private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
+    public HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
     private Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
 
@@ -91,10 +91,13 @@ public class Jeu extends Observable {
                 }
                 if(tabNiveau.tab[x][y]=='X'){
                     addCase(new Vide(this), x, y);
-                    Bloc b = new BlocObjectif(this, grilleEntites[x][y]);
+                    Bloc b = new BlocObjectif(this, grilleEntites[x][y]); // chaque Entite stocque la case qui la contiene
                 }
                 if(tabNiveau.tab[x][y]=='G'){
                     addCase(new Glace(this), x, y);
+                }
+                if(tabNiveau.tab[x][y]=='V'){
+                    addCase(new CaseVitre(this), x, y);
                 }
             }
         }
@@ -102,7 +105,7 @@ public class Jeu extends Observable {
 
 
     /** "addCase" permet d'ajouter une case dans le tableau de case "grilleEntites" */
-    private void addCase(Case e, int x, int y) {
+    public void addCase(Case e, int x, int y) {
         grilleEntites[x][y] = e;  // on stocke la case "e" dans la grilleEntites puis
         map.put(e, new Point(x, y)); //on associe à la case "e" la coordonnée (x,y)
     }
@@ -121,7 +124,7 @@ public class Jeu extends Observable {
 
 
         if (contenuDansGrille(pCible)) {
-            Entite eCible = caseALaPosition(pCible).getEntite(); // "getEntite" retourne l'entité contenu dans la case depuis laquelle on l'a appellé
+            Entite eCible = caseALaPosition(pCible).getEntite(); // "getEntite" retourne l'entité contenu dans la case cible
             if (eCible != null) { // Si la futur case contient déjà un entité, on va essayer de le pousser
                 eCible.pousser(d); // si l'entité est quelque chose et non pas un Null,  on la pousse par rapport à la direction:
             } // Bloc.pousser -> jeu.deplacerEntite => boolean: true si la case à la position pCible peutEtreParcouru
@@ -129,8 +132,8 @@ public class Jeu extends Observable {
 
             // si la case est libérée
             if (caseALaPosition(pCible).peutEtreParcouru()) { // Case.Mur.peutEtreParcouru = return false ; Case.Vide.peutEtreParcouru = return Case.entitérive == null
-                e.getCase().quitterLaCase(); // les choses à faire avant de quitter l'ancienne case
-                caseALaPosition(pCible).entrerSurLaCase(e); // les choses à faire avant de rentrer dans la nouvelle case
+                e.getCase().quitterLaCase(); // les choses à faire avant de quitter l'ancienne case : mettre l'entité dans la cae=se à null
+                caseALaPosition(pCible).entrerSurLaCase(e); // les choses à faire avant de rentrer dans la nouvelle case: stocker l'entité dans la variable entité de la case
 
             }
             // Vérifier si la case cible est une Case Glace

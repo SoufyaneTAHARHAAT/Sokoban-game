@@ -3,6 +3,13 @@ package modele;
 /**
  * Entités amenées à bouger
  */
+
+/**
+ * RAPPELLE !!!!
+ * chaque objet non basique (int etc) sont passé par référence et non pas par copie en java
+ * Une objet est supprimé par le garbage collector automatiquement si aucun pointeur ne pointe dessus
+ * La seul chose qui pointe sur une case en permanance c'est la case qui la contienne car la variable qui la crée depuis
+ * l'initialisation du jeu est détruit à chaque boucle pour la nouvelle boucle */
 public abstract class Entite extends Obj {
 
     protected Case c;

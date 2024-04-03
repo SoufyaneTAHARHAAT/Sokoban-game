@@ -41,6 +41,10 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoCaseObjectif;
     private ImageIcon icoGlace;
 
+    private ImageIcon icoCaseVitre;
+
+    private ImageIcon icoCaseVitreCassee;
+
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
     private JLabel pasLabel; //pour afficher le numéro de pas
@@ -87,6 +91,8 @@ public class VueControleur extends JFrame implements Observer {
         icoBlocObjectif = chargerIcone("Images/BlocObjectif.png");
         icoCaseObjectif = chargerIcone("Images/CaseObjectif.png");
         icoGlace = chargerIcone("Images/Glace.png");
+        icoCaseVitre = chargerIcone("Images/Vitre.png");
+        icoCaseVitreCassee = chargerIcone("Images/VitreCassee.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -154,7 +160,16 @@ public class VueControleur extends JFrame implements Observer {
                             tabJLabel[x][y].setIcon(icoGlace);
                         } else if (jeu.getGrille()[x][y] instanceof CaseObjectif) {
                             tabJLabel[x][y].setIcon(icoCaseObjectif);
-                        } else if (jeu.getGrille()[x][y] instanceof Vide) {
+                        } else if (jeu.getGrille()[x][y] instanceof CaseVitre) {
+                            if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 0){
+                                tabJLabel[x][y].setIcon(icoCaseVitre);
+                            } else if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 1){
+                                tabJLabel[x][y].setIcon(icoCaseVitreCassee);
+                            }
+                            else if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 2){
+                                tabJLabel[x][y].setIcon(icoVide);
+                            }
+                        } else if (jeu.getGrille()[x][y] instanceof Vide) { // à la fin car vu que les autres case à part le mur hérite de casevide, cette verification sera tout le temps vrais
                             tabJLabel[x][y].setIcon(icoVide);
                         }
                     }
