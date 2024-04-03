@@ -175,7 +175,7 @@ public class VueControleur extends JFrame implements Observer {
 
             if (choix == JOptionPane.YES_OPTION) {
                 // L'utilisateur a choisi de passer au niveau suivant
-                jeu.initialisationNiveau(jeu.niveau.NiveauSuivant());
+                jeu.initialisationNiveau();
             } else if (choix == JOptionPane.NO_OPTION) {
                 // L'utilisateur a choisi de quitter le jeu
                 System.exit(0);

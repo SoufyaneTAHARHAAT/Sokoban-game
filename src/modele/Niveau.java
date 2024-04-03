@@ -15,6 +15,7 @@ public class Niveau {
 
     public String NiveauSuivant(){
         IndiceNiveauActuel++;
+        System.out.print("\n"+IndiceNiveauActuel+"\n");
         return TabNiveau[IndiceNiveauActuel];
     }
 

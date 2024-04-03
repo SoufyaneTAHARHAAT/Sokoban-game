@@ -37,7 +37,7 @@ public class Jeu extends Observable {
     public Jeu() {
         niveau = new Niveau();
 
-        initialisationNiveau(niveau.NiveauSuivant());
+        initialisationNiveau();
     }
 
 
@@ -66,8 +66,8 @@ public class Jeu extends Observable {
      *  deplacerHeros -> entite.avancerDirectionChoisie -> jeu.deplacerEntite(this, d);*/
 
 
-    public void initialisationNiveau(int NumNiveau){
-        LectureFichier tabNiveau = new LectureFichier(TabFichierNiveau[NumNiveau], SIZE_X, SIZE_Y);
+    public void initialisationNiveau(){
+        LectureFichier tabNiveau = new LectureFichier(niveau.NiveauSuivant(), SIZE_X, SIZE_Y);
         for(int x = 0; x<SIZE_X; x++){
             for(int y= 0; y<SIZE_Y; y++){
                 if(tabNiveau.tab[x][y]=='M'){
