@@ -25,23 +25,19 @@ public class Jeu extends Observable {
     private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
     private Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
-    public String[] TabFichierNiveau;
-    public int CompteurNiveau = 0;
+
     private int compteurPasHero = 0;
+
+    public Niveau niveau;
 
     public int getCompteurPasHero() {
         return compteurPasHero;
     }
 
     public Jeu() {
-        int nombreNiveaux = 5;
-        TabFichierNiveau = new String[nombreNiveaux];
+        niveau = new Niveau();
 
-        for (int i = 0; i < nombreNiveaux; i++) {
-            TabFichierNiveau[i] = "Niveaux/Niveau" + i + ".txt";
-        }
-
-        initialisationNiveau(CompteurNiveau);
+        initialisationNiveau(niveau.NiveauSuivant());
     }
 
 
