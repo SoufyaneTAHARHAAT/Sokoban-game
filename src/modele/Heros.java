@@ -14,7 +14,17 @@ public class Heros extends Entite
         super(_jeu, c);
     }
 
+    private Direction direction;
 
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
+    // Méthode pour définir la direction du héros
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
 }
 
 /**
