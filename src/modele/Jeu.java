@@ -23,6 +23,9 @@ public class Jeu extends Observable {
     private Heros heros;
 
     public HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
+    public HashMap<Case, Point> getMap() {
+        return map;
+    }
     private Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
 
@@ -164,7 +167,7 @@ public class Jeu extends Observable {
 
     /**
      * "calculerPointCible" renvoi le coordonné Point de la nouvelle case souhaité*/
-    private Point calculerPointCible(Point pCourant, Direction d) {
+    protected Point calculerPointCible(Point pCourant, Direction d) {
         Point pCible = null;
 
         switch(d) {
@@ -181,12 +184,12 @@ public class Jeu extends Observable {
 
     
     /** "contenuDansGrille" retourne un boolean qui indique si p est une coordonnée valide pour une case */
-    private boolean contenuDansGrille(Point p) {
+    protected boolean contenuDansGrille(Point p) {
         return p.x >= 0 && p.x < SIZE_X && p.y >= 0 && p.y < SIZE_Y;
     }
 
     /** "caseALaPosition" renvoie le case (et non pas son contenu) dont la coordonnée est passée en paramettre */
-    private Case caseALaPosition(Point p) {
+    protected Case caseALaPosition(Point p) {
         Case retour = null;
         
         if (contenuDansGrille(p)) { // Verifie si la coordonnée est correcte.

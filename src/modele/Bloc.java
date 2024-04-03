@@ -11,6 +11,12 @@ public class Bloc extends Entite {
         return jeu.deplacerEntite(this, d);
     }
 
+    @Override
+    public Direction getDirection() {
+        // Retourner une valeur par défaut (par exemple, Direction.haut) ou
+        // lever une exception si cela n'a pas de sens pour votre application
+        return Direction.haut;
+    }
 }
 
 /**
