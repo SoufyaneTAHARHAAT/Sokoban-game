@@ -44,6 +44,7 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoCaseVitre;
 
     private ImageIcon icoCaseVitreCassee;
+    private ImageIcon icoCaseTeleporter;
 
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
@@ -93,6 +94,7 @@ public class VueControleur extends JFrame implements Observer {
         icoGlace = chargerIcone("Images/Glace.png");
         icoCaseVitre = chargerIcone("Images/Vitre.png");
         icoCaseVitreCassee = chargerIcone("Images/VitreCassee.png");
+        icoCaseTeleporter = chargerIcone("Images/teleporteur.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -156,10 +158,12 @@ public class VueControleur extends JFrame implements Observer {
                     } else {
                         if (jeu.getGrille()[x][y] instanceof Mur) {
                             tabJLabel[x][y].setIcon(icoMur);
-                        }  else if (jeu.getGrille()[x][y] instanceof Glace) {
+                        } else if (jeu.getGrille()[x][y] instanceof Glace) {
                             tabJLabel[x][y].setIcon(icoGlace);
                         } else if (jeu.getGrille()[x][y] instanceof CaseObjectif) {
                             tabJLabel[x][y].setIcon(icoCaseObjectif);
+                        } else if (jeu.getGrille()[x][y] instanceof CaseTeleporter) {
+                            tabJLabel[x][y].setIcon(icoCaseTeleporter);
                         } else if (jeu.getGrille()[x][y] instanceof CaseVitre) {
                             if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 0){
                                 tabJLabel[x][y].setIcon(icoCaseVitre);

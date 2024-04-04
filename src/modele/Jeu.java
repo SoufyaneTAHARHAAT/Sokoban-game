@@ -102,6 +102,13 @@ public class Jeu extends Observable {
                 if(tabNiveau.tab[x][y]=='V'){
                     addCase(new CaseVitre(this), x, y);
                 }
+                if(tabNiveau.tab[x][y]=='T') {
+                    CaseTeleporter VarTampon = new CaseTeleporter(this);
+                    addCase(VarTampon, x, y);
+                    VarTampon.DebugAfficheDonneeMembre(); // Appelle AVANT la nouvelle insertion !
+                    CaseTeleporter.TabCaseTeleporter[CaseTeleporter.NbCaseTeleporter] = VarTampon;
+                    CaseTeleporter.NbCaseTeleporter++;
+                }
             }
         }
     }
