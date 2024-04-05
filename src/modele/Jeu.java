@@ -17,6 +17,8 @@ public class Jeu extends Observable {
     public static final int SIZE_X = 20;
     public static final int SIZE_Y = 10;
 
+    public FinJeu testfinjeu;
+
     public Vector<CaseObjectif> TabCaseObjectif = new Vector<>();// tableau contenant les cases objectifs
 
 
@@ -29,7 +31,7 @@ public class Jeu extends Observable {
     private Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
 
-    private int compteurPasHero = 0;
+    private int compteurPasHero;
 
     public Niveau niveau;
 
@@ -39,6 +41,10 @@ public class Jeu extends Observable {
 
     public Jeu() {
         niveau = new Niveau();
+
+        compteurPasHero = 0;
+
+        testfinjeu = new FinJeu(this);
 
         initialisationNiveau();
     }
@@ -70,7 +76,9 @@ public class Jeu extends Observable {
 
 
     public void initialisationNiveau(){
-        LectureFichier tabNiveau = new LectureFichier(niveau.NiveauSuivant(), SIZE_X, SIZE_Y);
+        testfinjeu.Fin= false;
+        CaseTeleporter.NbCaseTeleporter=0;
+        LectureFichier tabNiveau = new LectureFichier(niveau.CheminNiveauSuivant(), SIZE_X, SIZE_Y);
         for(int x = 0; x<SIZE_X; x++){
             for(int y= 0; y<SIZE_Y; y++){
                 if(tabNiveau.tab[x][y]=='M'){
@@ -103,11 +111,15 @@ public class Jeu extends Observable {
                     addCase(new CaseVitre(this), x, y);
                 }
                 if(tabNiveau.tab[x][y]=='T') {
-                    CaseTeleporter VarTampon = new CaseTeleporter(this);
-                    addCase(VarTampon, x, y);
-                    VarTampon.DebugAfficheDonneeMembre(); // Appelle AVANT la nouvelle insertion !
-                    CaseTeleporter.TabCaseTeleporter[CaseTeleporter.NbCaseTeleporter] = VarTampon;
-                    CaseTeleporter.NbCaseTeleporter++;
+                    if(CaseTeleporter.NbCaseTeleporter<CaseTeleporter.TabCaseTeleporter.length){
+                        CaseTeleporter VarTampon = new CaseTeleporter(this);
+                        addCase(VarTampon, x, y);
+                        VarTampon.DebugAfficheDonneeMembre(); // Appelle AVANT la nouvelle insertion !
+                        CaseTeleporter.TabCaseTeleporter[CaseTeleporter.NbCaseTeleporter] = VarTampon;
+                        CaseTeleporter.NbCaseTeleporter++;
+                    }else {
+                        addCase(new Vide(this), x, y);
+                    }
                 }
             }
         }
@@ -126,6 +138,9 @@ public class Jeu extends Observable {
      * Sinon, rien n'est fait.
      */
     public boolean deplacerEntite(Entite e, Direction d) {
+        if(testfinjeu.Fin){
+            return false; // on n'execute rien et on sort directement
+        }
         boolean retour = true;
         
         Point pCourant = map.get(e.getCase()); // récupérer la case de l'entité de la paramettre formel
@@ -157,7 +172,7 @@ public class Jeu extends Observable {
                 } else {
                     retour = false; // Le deuxième déplacement n'est pas possible
                 }
-            } else {
+            } else { // c'est le elese pour if (caseALaPosition(pCible).peutEtreParcouru())
                 retour = false;
             }
 
@@ -206,17 +221,6 @@ public class Jeu extends Observable {
         return retour;
     }
 
-
-    //Fonction pour verifier la fin du jeu
-    public boolean FinJeu(){
-        for (CaseObjectif caseObjectif : TabCaseObjectif) {
-            if (!(caseObjectif.e instanceof BlocObjectif)) {
-                return false;
-            }
-        }
-        compteurPasHero = -1;
-        return true;
-    }
 
 }
 

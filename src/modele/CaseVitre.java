@@ -26,6 +26,10 @@ public class CaseVitre extends Vide {
             //e.getCase().setEntite(null); // erreur car setEntite(null) => null.setCase(this) = erreur;
             e.setCase(null); // => l'entité "existe" encore dans la mémoire mais n'est dans aucune case. Or le Vue =Controleur
                              // fait l'affichage en verifiant l'entité dans les case => il ne sera pas afficher
+            if(e instanceof Heros){
+                jeu.testfinjeu.Fin = true;
+                jeu.testfinjeu.NiveauReussi= false;
+            }
             //----Première idée: créer carrément une nouvelle case de type Vide à l'entrée de la Deuxième entité qui ne sera plus absorbé contrairement au 1er
                 //Point PositionCase = jeu.map.get(this);
                 //jeu.addCase(new Vide(jeu), PositionCase.x, PositionCase.y);

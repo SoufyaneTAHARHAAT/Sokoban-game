@@ -13,7 +13,7 @@ public class Niveau {
         }
     }
 
-    public String NiveauSuivant(){
+    public String CheminNiveauSuivant(){
         IndiceNiveauActuel= (IndiceNiveauActuel + 1)%TabNiveau.length;
         System.out.print("\n"+IndiceNiveauActuel+"\n");
         return TabNiveau[IndiceNiveauActuel];
