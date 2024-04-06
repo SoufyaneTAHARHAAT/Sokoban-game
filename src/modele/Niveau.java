@@ -6,7 +6,7 @@ public class Niveau {
 
     public Niveau(){
         IndiceNiveauActuel = -1;
-        int nombreNiveaux = 7;
+        int nombreNiveaux = 8;
         TabNiveau = new String[nombreNiveaux];
         for (int i = 0; i < nombreNiveaux; i++) {
             TabNiveau[i] = "Niveaux/Niveau" + i + ".txt";
