@@ -2,17 +2,12 @@ package modele;
 
 import java.awt.Point;
 
-public class Glace extends Case {
+public class Glace extends Vide {
     private Jeu jeu;
 
     public Glace(Jeu _jeu) {
         super(_jeu);
         this.jeu = _jeu;
-    }
-
-    @Override
-    public boolean peutEtreParcouru() {
-        return true;
     }
 
     @Override
@@ -23,7 +18,7 @@ public class Glace extends Case {
             Direction direction = e.getDirection();
             Point pCourant = jeu.getMap().get(this);
             Point pCibleSecondaire = jeu.calculerPointCible(pCourant, direction);
-            if (jeu.contenuDansGrille(pCibleSecondaire) && jeu.caseALaPosition(pCibleSecondaire).peutEtreParcouru()) {
+            if (jeu.contenuDansGrille(pCibleSecondaire) && jeu.caseALaPosition(pCibleSecondaire).peutEtreParcouru(this.e)) {
                 // Effectuer le deuxième déplacement
                 e.getCase().quitterLaCase();
                 jeu.caseALaPosition(pCibleSecondaire).entrerSurLaCase(e);

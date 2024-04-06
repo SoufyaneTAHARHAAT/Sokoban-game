@@ -37,13 +37,13 @@ public class CaseTeleporter extends Vide{
                 DebugAfficheDonneeMembre();
             //----------Fin de Debug
 
-            if((TabCaseTeleporter[i] != this) && (TabCaseTeleporter[i].peutEtreParcouru())){ // toute le comportement d'une case Teleporteur ne s'active que si il peut être parcouru d'abord => son entité e = null
+            if((TabCaseTeleporter[i] != this) && (TabCaseTeleporter[i].peutEtreParcouru(this.e))){ // toute le comportement d'une case Teleporteur ne s'active que si il peut être parcouru d'abord => son entité e = null
                 Point pCourant = jeu.map.get(TabCaseTeleporter[i]); // récupère le point de la case passé en paramèttre
                 int d = 0;
                 do{
                     Point pCible = jeu.calculerPointCible(pCourant, TabDirection[d]);  // "calculerPointCible" renvoi le coordonné Point de la NOUVELLE case souhaité par rapport à la direction d
                     if (jeu.contenuDansGrille(pCible)){
-                        TeleportationPossible = jeu.caseALaPosition(pCible).peutEtreParcouru();
+                        TeleportationPossible = jeu.caseALaPosition(pCible).peutEtreParcouru(this.e);
                         if (TeleportationPossible) { // Case.Mur.peutEtreParcouru = return false ; Case.Vide.peutEtreParcouru = return Case.entitérive == null
                             e.getCase().quitterLaCase(); // les choses à faire avant de quitter l'ancienne case : mettre l'entité dans la cae=se à null
                             jeu.caseALaPosition(pCible).entrerSurLaCase(e); // les choses à faire avant de rentrer dans la nouvelle case: stocker l'entité dans la variable entité de la case

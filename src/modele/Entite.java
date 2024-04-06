@@ -33,7 +33,11 @@ public abstract class Entite extends Obj {
     }
 
     public boolean pousser(Direction d) {
-        return false;
+        //return false;
+        if(!(c.e instanceof Heros)){ // remarque: c.e = this bloc mais impossible d'utiliser le this directement car il ne peut pas downcaster this bloc to herso
+            return ( (CaseAimant.CaseActuelPeutPousserAilleur(c, jeu)) && (jeu.deplacerEntite(this, d)) );
+        }
+        return jeu.deplacerEntite(this, d);
     }
 
 

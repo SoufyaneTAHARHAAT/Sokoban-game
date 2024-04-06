@@ -2,7 +2,7 @@ package modele;
 public class Niveau {
 
     private String [] TabNiveau;
-    private int IndiceNiveauActuel;
+    public int IndiceNiveauActuel;
 
     public Niveau(){
         IndiceNiveauActuel = -1;

@@ -121,6 +121,22 @@ public class Jeu extends Observable {
                         addCase(new Vide(this), x, y);
                     }
                 }
+                if(tabNiveau.tab[x][y]=='A'){
+                    if(CaseAimant.NbCaseAimant<CaseAimant.TabCaseAimant.length){
+                        CaseAimant Tampon = new CaseAimant(this);
+                        Tampon.IndiceLocalDirection = CaseAimant.IndiceStaticDirection;
+                        CaseAimant.IndiceStaticDirection = (CaseAimant.IndiceStaticDirection+1)%4; // 4 = nbr de direction dans TabDirection
+                        addCase(Tampon, x, y);
+                        Tampon.InisialiserPointCaseABloquer();
+                        CaseAimant.TabCaseAimant[CaseAimant.NbCaseAimant]= Tampon;
+                        CaseAimant.NbCaseAimant++;
+                    } else {
+                        addCase(new Vide(this), x, y);
+                    }
+                }
+                if(tabNiveau.tab[x][y]=='C'){
+                    addCase(new CaseBoutonAimant(this), x, y);
+                }
             }
         }
     }
@@ -155,8 +171,8 @@ public class Jeu extends Observable {
             } // Bloc.pousser -> jeu.deplacerEntite => boolean: true si la case à la position pCible peutEtreParcouru
             // fonction recursive
 
-            // si la case est libérée
-            if (caseALaPosition(pCible).peutEtreParcouru()) { // Case.Mur.peutEtreParcouru = return false ; Case.Vide.peutEtreParcouru = return Case.entitérive == null
+            // si la case est libérée => le pousser() dans le if d'avant a réussi
+            if (caseALaPosition(pCible).peutEtreParcouru(e)) { // Case.Mur.peutEtreParcouru = return false ; Case.Vide.peutEtreParcouru = return Case.entitérive == null
                 e.getCase().quitterLaCase(); // les choses à faire avant de quitter l'ancienne case : mettre l'entité dans la cae=se à null
                 caseALaPosition(pCible).entrerSurLaCase(e); // les choses à faire avant de rentrer dans la nouvelle case: stocker l'entité dans la variable entité de la case
 
@@ -165,7 +181,7 @@ public class Jeu extends Observable {
             if (caseALaPosition(pCible) instanceof Glace) {
                 // Si c'est le cas, on effectue un deuxième déplacement dans la même direction
                 Point pCibleSecondaire = calculerPointCible(pCible, d);
-                if (contenuDansGrille(pCibleSecondaire) && caseALaPosition(pCibleSecondaire).peutEtreParcouru()) {
+                if (contenuDansGrille(pCibleSecondaire) && caseALaPosition(pCibleSecondaire).peutEtreParcouru(e)) {
                     // Effectuer le deuxième déplacement
                     e.getCase().quitterLaCase();
                     caseALaPosition(pCibleSecondaire).entrerSurLaCase(e);

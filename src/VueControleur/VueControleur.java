@@ -13,6 +13,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.BorderLayout;// pour l'affichage en haut à droite du nbre de pas
+//---
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+//---
 
 
 
@@ -40,15 +44,20 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoBlocObjectif;
     private ImageIcon icoCaseObjectif;
     private ImageIcon icoGlace;
-
     private ImageIcon icoCaseVitre;
-
     private ImageIcon icoCaseVitreCassee;
     private ImageIcon icoCaseTeleporter;
+    private ImageIcon icoCaseAimantHaut;
+    private ImageIcon icoCaseAimantBas;
+    private ImageIcon icoCaseAimantGauche;
+    private ImageIcon icoCaseAimantDroite;
+    private ImageIcon icoCaseBoutonAimant;
 
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
     private JLabel pasLabel; //pour afficher le numéro de pas
+
+    private JButton BRecommencer;
 
 
     public VueControleur(Jeu _jeu) {
@@ -64,6 +73,9 @@ public class VueControleur extends JFrame implements Observer {
 
         mettreAJourAffichage();
 
+        setVisible(true);
+        requestFocus(); // Ajout du focus au JFrame
+
     }
 
     private void ajouterEcouteurClavier() {
@@ -76,6 +88,12 @@ public class VueControleur extends JFrame implements Observer {
                     case KeyEvent.VK_RIGHT : jeu.deplacerHeros(Direction.droite); break;
                     case KeyEvent.VK_DOWN : jeu.deplacerHeros(Direction.bas); break;
                     case KeyEvent.VK_UP : jeu.deplacerHeros(Direction.haut); break;
+                    //---
+                    case KeyEvent.VK_R: // pour recommencer appuiyer sur "r"
+                        jeu.niveau.IndiceNiveauActuel--; // pour compenser l'incrémentation automatique de CheminNiveauSuivant dans jeu.initialisationNiveau
+                        jeu.initialisationNiveau();
+
+                    //---
 
 
                 }
@@ -95,6 +113,11 @@ public class VueControleur extends JFrame implements Observer {
         icoCaseVitre = chargerIcone("Images/Vitre.png");
         icoCaseVitreCassee = chargerIcone("Images/VitreCassee.png");
         icoCaseTeleporter = chargerIcone("Images/teleporteur.png");
+        icoCaseAimantHaut = chargerIcone("Images/AimantHaut.png");
+        icoCaseAimantBas = chargerIcone("Images/AimantBas.png");
+        icoCaseAimantGauche = chargerIcone("Images/AimantGauche.png");
+        icoCaseAimantDroite = chargerIcone("Images/AimantDroite.png");
+        icoCaseBoutonAimant = chargerIcone("Images/CaseBoutonAimant.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -121,6 +144,24 @@ public class VueControleur extends JFrame implements Observer {
 
         pasLabel = new JLabel("Pas: 0");
         add(pasLabel, BorderLayout.NORTH); // Ajoutez le JLabel au nord de la fenêtre
+
+        //------------------------
+        /*
+        BRecommencer = new JButton("Recommencer !");
+        BRecommencer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { // nom de fonction propre à java
+                jeu.niveau.IndiceNiveauActuel--; //pour compenser l'incrémentation automatique que jeu.initialisationNiveau() va faire
+                jeu.initialisationNiveau();
+
+                //VueControleur.this.requestFocus(); // Ajout du focus au JFrame
+                VueControleur.this.requestFocusInWindow(); // Demander le focus à la fenêtre
+                //setVisible(true);
+            }
+        });
+        add(BRecommencer, BorderLayout.SOUTH);
+        */
+        //------------------------
 
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
@@ -156,7 +197,17 @@ public class VueControleur extends JFrame implements Observer {
                             tabJLabel[x][y].setIcon(icoBloc);
                         }
                     } else {
-                        if (jeu.getGrille()[x][y] instanceof Mur) {
+                         if (jeu.getGrille()[x][y] instanceof CaseAimant) { // doit être avant mur car jeu.getGrille()[x][y] instanceof Mur sera vrai => sinon on ne rentrera pas dans cette else if
+                            if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.haut ){
+                                tabJLabel[x][y].setIcon(icoCaseAimantHaut);
+                            } else if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.bas ){
+                                tabJLabel[x][y].setIcon(icoCaseAimantBas);
+                            } else if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.gauche ){
+                                tabJLabel[x][y].setIcon(icoCaseAimantGauche);
+                            } else if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.droite ){
+                                tabJLabel[x][y].setIcon(icoCaseAimantDroite);
+                            }
+                        } else if (jeu.getGrille()[x][y] instanceof Mur) {
                             tabJLabel[x][y].setIcon(icoMur);
                         } else if (jeu.getGrille()[x][y] instanceof Glace) {
                             tabJLabel[x][y].setIcon(icoGlace);
@@ -169,10 +220,11 @@ public class VueControleur extends JFrame implements Observer {
                                 tabJLabel[x][y].setIcon(icoCaseVitre);
                             } else if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 1){
                                 tabJLabel[x][y].setIcon(icoCaseVitreCassee);
-                            }
-                            else if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 2){
+                            } else if(((CaseVitre) jeu.getGrille()[x][y]).CompteurPassageVitre == 2){
                                 tabJLabel[x][y].setIcon(icoVide);
                             }
+                        } else if (jeu.getGrille()[x][y] instanceof CaseBoutonAimant) {
+                            tabJLabel[x][y].setIcon(icoCaseBoutonAimant);
                         } else if (jeu.getGrille()[x][y] instanceof Vide) { // à la fin car vu que les autres case à part le mur hérite de casevide, cette verification sera tout le temps vrais
                             tabJLabel[x][y].setIcon(icoVide);
                         }

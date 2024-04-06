@@ -8,7 +8,7 @@ package modele;
 public abstract class Case extends Obj {
 
     protected Entite e;
-    public abstract boolean peutEtreParcouru();
+    public abstract boolean peutEtreParcouru(Entite EQuiVeutParcourir);
 
 
     // Cette fonction (a redéfinir) détermine le comportement (qui peut être complexe) lorsque l'entité entre dans la case
