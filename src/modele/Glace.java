@@ -11,17 +11,17 @@ public class Glace extends Vide {
     }
 
     @Override
-    public boolean entrerSurLaCase(Entite e) {
-        boolean entreeReussie = super.entrerSurLaCase(e);
+    public boolean entrerSurLaCase(Entite e, Direction DirectionSource) {
+        boolean entreeReussie = super.entrerSurLaCase(e, DirectionSource);
         if (entreeReussie && e instanceof BlocObjectif) {
             // Si un BlocObjectif entre sur une case de glace, il effectue un deuxième déplacement dans la même direction
             Direction direction = e.getDirection();
             Point pCourant = jeu.getMap().get(this);
             Point pCibleSecondaire = jeu.calculerPointCible(pCourant, direction);
-            if (jeu.contenuDansGrille(pCibleSecondaire) && jeu.caseALaPosition(pCibleSecondaire).peutEtreParcouru(this.e)) {
+            if (jeu.contenuDansGrille(pCibleSecondaire) && jeu.caseALaPosition(pCibleSecondaire).peutEtreParcouru(this.e, DirectionSource)) {
                 // Effectuer le deuxième déplacement
                 e.getCase().quitterLaCase();
-                jeu.caseALaPosition(pCibleSecondaire).entrerSurLaCase(e);
+                jeu.caseALaPosition(pCibleSecondaire).entrerSurLaCase(e, DirectionSource);
             }
         }
         return entreeReussie;

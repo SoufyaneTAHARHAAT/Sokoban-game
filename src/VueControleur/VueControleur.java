@@ -52,6 +52,7 @@ public class VueControleur extends JFrame implements Observer {
     private ImageIcon icoCaseAimantGauche;
     private ImageIcon icoCaseAimantDroite;
     private ImageIcon icoCaseBoutonAimant;
+    private ImageIcon icoCaseRail;
 
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
@@ -92,7 +93,8 @@ public class VueControleur extends JFrame implements Observer {
                     case KeyEvent.VK_R: // pour recommencer appuiyer sur "r"
                         jeu.niveau.IndiceNiveauActuel--; // pour compenser l'incrémentation automatique de CheminNiveauSuivant dans jeu.initialisationNiveau
                         jeu.initialisationNiveau();
-
+                        mettreAJourAffichage();
+                        break;
                     //---
 
 
@@ -118,6 +120,7 @@ public class VueControleur extends JFrame implements Observer {
         icoCaseAimantGauche = chargerIcone("Images/AimantGauche.png");
         icoCaseAimantDroite = chargerIcone("Images/AimantDroite.png");
         icoCaseBoutonAimant = chargerIcone("Images/CaseBoutonAimant.png");
+        icoCaseRail = chargerIcone("Images/CaseRail.png");
     }
 
     private ImageIcon chargerIcone(String urlIcone) {
@@ -197,18 +200,20 @@ public class VueControleur extends JFrame implements Observer {
                             tabJLabel[x][y].setIcon(icoBloc);
                         }
                     } else {
-                         if (jeu.getGrille()[x][y] instanceof CaseAimant) { // doit être avant mur car jeu.getGrille()[x][y] instanceof Mur sera vrai => sinon on ne rentrera pas dans cette else if
-                            if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.haut ){
+                        if (jeu.getGrille()[x][y] instanceof CaseAimant) { // doit être avant mur car jeu.getGrille()[x][y] instanceof Mur sera vrai => sinon on ne rentrera pas dans cette else if
+                            if (((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.haut) {
                                 tabJLabel[x][y].setIcon(icoCaseAimantHaut);
-                            } else if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.bas ){
+                            } else if (((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.bas) {
                                 tabJLabel[x][y].setIcon(icoCaseAimantBas);
-                            } else if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.gauche ){
+                            } else if (((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.gauche) {
                                 tabJLabel[x][y].setIcon(icoCaseAimantGauche);
-                            } else if( ((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.droite ){
+                            } else if (((CaseAimant) jeu.getGrille()[x][y]).TabDirection[((CaseAimant) jeu.getGrille()[x][y]).IndiceLocalDirection] == Direction.droite) {
                                 tabJLabel[x][y].setIcon(icoCaseAimantDroite);
                             }
                         } else if (jeu.getGrille()[x][y] instanceof Mur) {
                             tabJLabel[x][y].setIcon(icoMur);
+                        } else if (jeu.getGrille()[x][y] instanceof CaseRail) {
+                            tabJLabel[x][y].setIcon(icoCaseRail);
                         } else if (jeu.getGrille()[x][y] instanceof Glace) {
                             tabJLabel[x][y].setIcon(icoGlace);
                         } else if (jeu.getGrille()[x][y] instanceof CaseObjectif) {

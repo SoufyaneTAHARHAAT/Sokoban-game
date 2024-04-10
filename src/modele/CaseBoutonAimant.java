@@ -5,7 +5,7 @@ public class CaseBoutonAimant extends Vide{
         super(_jeu);
     }
 
-    @Override public boolean entrerSurLaCase(Entite e){
+    @Override public boolean entrerSurLaCase(Entite e, Direction DirectionSource){
         setEntite(e);
         for(int i=0; i<CaseAimant.NbCaseAimant; i++){
             CaseAimant.TabCaseAimant[i].IncrementerIndiceLocaleMAJPointABloquer();

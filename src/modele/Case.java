@@ -6,13 +6,16 @@
 package modele;
 
 public abstract class Case extends Obj {
+    public boolean PeutEtreQuitter(Direction DirectionProchainCase){
+        return true;
+    }
 
     protected Entite e;
-    public abstract boolean peutEtreParcouru(Entite EQuiVeutParcourir);
+    public abstract boolean peutEtreParcouru(Entite EQuiVeutParcourir, Direction DirectionSource);
 
 
     // Cette fonction (a redéfinir) détermine le comportement (qui peut être complexe) lorsque l'entité entre dans la case
-    public boolean entrerSurLaCase(Entite e) {
+    public boolean entrerSurLaCase(Entite e, Direction DirectionSource) {
 
         //Case c = e.getCase();
         //if (c !=null) {
@@ -41,10 +44,15 @@ public abstract class Case extends Obj {
     public void setEntite(Entite _e) {
 
         e = _e;
-        e.setCase(this);}
+        e.setCase(this);
+    }
 
 
-   }
+}
+
+
+
+
 
    /**
     * - la donnée membre "Entite e" contient l'élément qui est dans cette case

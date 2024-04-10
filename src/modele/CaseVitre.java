@@ -15,7 +15,7 @@ public class CaseVitre extends Vide {
         e = null;
     }
 
-    @Override public boolean entrerSurLaCase(Entite e) {
+    @Override public boolean entrerSurLaCase(Entite e, Direction DirectionSource) {
         if(CompteurPassageVitre == 0){ // => VitreCasse = 0 => 1er passage dedans: ça se casse à la sortie
             CompteurPassageVitre++;
             setEntite(e);
@@ -36,7 +36,7 @@ public class CaseVitre extends Vide {
             //---
         }
         else if(CompteurPassageVitre == 2){ // => disparition de la case vitre pour devenir une case normale
-            super.entrerSurLaCase(e); // Deuxième idée: on garde cette case de type case vide mais on utilise la fonction entrerSurLaCase de la case vide + icone de la case Vide dans VurControleur
+            super.entrerSurLaCase(e, DirectionSource); // Deuxième idée: on garde cette case de type case vide mais on utilise la fonction entrerSurLaCase de la case vide + icone de la case Vide dans VurControleur
         }
         System.out.print("\nCompteur de passage dans chaque caseVitre: " + CompteurPassageVitre + "\n");
         return true;

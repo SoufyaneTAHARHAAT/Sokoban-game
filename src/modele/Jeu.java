@@ -110,6 +110,9 @@ public class Jeu extends Observable {
                 if(tabNiveau.tab[x][y]=='V'){
                     addCase(new CaseVitre(this), x, y);
                 }
+                if(tabNiveau.tab[x][y]=='R'){
+                    addCase(new CaseRail(this), x, y);
+                }
                 if(tabNiveau.tab[x][y]=='T') {
                     if(CaseTeleporter.NbCaseTeleporter<CaseTeleporter.TabCaseTeleporter.length){
                         CaseTeleporter VarTampon = new CaseTeleporter(this);
@@ -172,19 +175,19 @@ public class Jeu extends Observable {
             // fonction recursive
 
             // si la case est libérée => le pousser() dans le if d'avant a réussi
-            if (caseALaPosition(pCible).peutEtreParcouru(e)) { // Case.Mur.peutEtreParcouru = return false ; Case.Vide.peutEtreParcouru = return Case.entitérive == null
+            if (caseALaPosition(pCible).peutEtreParcouru(e, d) && (e.getCase().PeutEtreQuitter(d))) { // Case.Mur.peutEtreParcouru = return false ; Case.Vide.peutEtreParcouru = return Case.entitérive == null
                 e.getCase().quitterLaCase(); // les choses à faire avant de quitter l'ancienne case : mettre l'entité dans la cae=se à null
-                caseALaPosition(pCible).entrerSurLaCase(e); // les choses à faire avant de rentrer dans la nouvelle case: stocker l'entité dans la variable entité de la case
+                caseALaPosition(pCible).entrerSurLaCase(e, d); // les choses à faire avant de rentrer dans la nouvelle case: stocker l'entité dans la variable entité de la case
 
             }
             // Vérifier si la case cible est une Case Glace
             if (caseALaPosition(pCible) instanceof Glace) {
                 // Si c'est le cas, on effectue un deuxième déplacement dans la même direction
                 Point pCibleSecondaire = calculerPointCible(pCible, d);
-                if (contenuDansGrille(pCibleSecondaire) && caseALaPosition(pCibleSecondaire).peutEtreParcouru(e)) {
+                if (contenuDansGrille(pCibleSecondaire) && caseALaPosition(pCibleSecondaire).peutEtreParcouru(e, d)) {
                     // Effectuer le deuxième déplacement
                     e.getCase().quitterLaCase();
-                    caseALaPosition(pCibleSecondaire).entrerSurLaCase(e);
+                    caseALaPosition(pCibleSecondaire).entrerSurLaCase(e, d);
                 } else {
                     retour = false; // Le deuxième déplacement n'est pas possible
                 }
