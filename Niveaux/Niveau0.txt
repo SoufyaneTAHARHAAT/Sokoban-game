@@ -1,9 +1,9 @@
 MMMMMMMMMMMMMMMMMMMM
-M                  M
-M                  M
-M   MMCMMAMAMMM    M
-M   MMHX     OM    M
-M   MMMMAMAMMMM    M
-M                  M
-M                  M
+M        MMM       M
+M        MOM       M
+M      MMMXMMM     M
+M      MOXHXOM     M
+M      MMMXMMM     M
+M        MOM       M
+M        MMM       M
 MMMMMMMMMMMMMMMMMMMM
