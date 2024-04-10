@@ -58,13 +58,15 @@ public class VueControleur extends JFrame implements Observer {
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
     private JLabel pasLabel; //pour afficher le numéro de pas
 
-    private JButton BRecommencer;
+    private Message message;
 
 
     public VueControleur(Jeu _jeu) {
         sizeX = Jeu.SIZE_X;
         sizeY = Jeu.SIZE_Y;
         jeu = _jeu;
+        message = new Message(_jeu);
+        message.setVisible(true);
 
         chargerLesIcones();
         placerLesComposantsGraphiques();
@@ -91,11 +93,19 @@ public class VueControleur extends JFrame implements Observer {
                     case KeyEvent.VK_UP : jeu.deplacerHeros(Direction.haut); break;
                     //---
                     case KeyEvent.VK_R: // pour recommencer appuiyer sur "r"
-                        jeu.niveau.IndiceNiveauActuel--; // pour compenser l'incrémentation automatique de CheminNiveauSuivant dans jeu.initialisationNiveau
-                        jeu.initialisationNiveau();
+                        jeu.niveau.RecommencerNiveau();
                         mettreAJourAffichage();
                         break;
                     //---
+                    case KeyEvent.VK_P: // pour recommencer appuiyer sur "r"
+                        jeu.niveau.NiveauPrecedant();
+                        mettreAJourAffichage();
+                        break;
+                    //---
+                    case KeyEvent.VK_S: // pour recommencer appuiyer sur "r"
+                        jeu.niveau.NiveauSuivant();
+                        mettreAJourAffichage();
+                        break;
 
 
                 }

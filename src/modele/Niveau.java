@@ -1,10 +1,14 @@
 package modele;
 public class Niveau {
 
+    /**
+     * !!!!!!!!!!!!!!!!!! CLASSE NON FINI DONC NON INSTENTIABLE !!!!!!!!!!!!!!!!!!!!*/
     private String [] TabNiveau;
     public int IndiceNiveauActuel;
+    Jeu jeu;
 
-    public Niveau(){
+    public Niveau(Jeu _jeu){
+        jeu = _jeu;
         IndiceNiveauActuel = -1;
         int nombreNiveaux = 9;
         TabNiveau = new String[nombreNiveaux];
@@ -17,6 +21,22 @@ public class Niveau {
         IndiceNiveauActuel= (IndiceNiveauActuel + 1)%TabNiveau.length;
         System.out.print("\n"+IndiceNiveauActuel+"\n");
         return TabNiveau[IndiceNiveauActuel];
+    }
+    public void RecommencerNiveau(){
+        jeu.niveau.IndiceNiveauActuel--; // pour compenser l'incrémentation automatique de CheminNiveauSuivant dans jeu.initialisationNiveau car ce dernier appelle Niveau.CheminNiveauSuivant
+        jeu.initialisationNiveau();
+    }
+
+    public void NiveauPrecedant(){
+        jeu.niveau.IndiceNiveauActuel -= 2; // pour compenser l'incrémentation automatique de CheminNiveauSuivant dans jeu.initialisationNiveau
+        if(jeu.niveau.IndiceNiveauActuel < -1){
+            jeu.niveau.IndiceNiveauActuel = -1;
+        }
+        jeu.initialisationNiveau();
+    }
+
+    public void NiveauSuivant(){
+        jeu.initialisationNiveau();
     }
 
 }

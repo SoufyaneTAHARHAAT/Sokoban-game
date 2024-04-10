@@ -28,7 +28,7 @@ public class Jeu extends Observable {
     public HashMap<Case, Point> getMap() {
         return map;
     }
-    private Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
+    public Case[][] grilleEntites = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une case à partir de ses coordonnées
 
 
     private int compteurPasHero;
@@ -40,7 +40,7 @@ public class Jeu extends Observable {
     }
 
     public Jeu() {
-        niveau = new Niveau();
+        niveau = new Niveau(this);
 
         compteurPasHero = 0;
 
