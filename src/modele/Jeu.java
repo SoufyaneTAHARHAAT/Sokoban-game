@@ -76,6 +76,7 @@ public class Jeu extends Observable {
 
 
     public void initialisationNiveau(){
+        map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une case à partir de sa référence
         TabCaseObjectif = new Vector<>();// tableau contenant les cases objectifs
         compteurPasHero=0;
         testfinjeu.Fin= false;
