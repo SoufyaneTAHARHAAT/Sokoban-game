@@ -76,6 +76,7 @@ public class Jeu extends Observable {
 
 
     public void initialisationNiveau(){
+        TabCaseObjectif = new Vector<>();// tableau contenant les cases objectifs
         compteurPasHero=0;
         testfinjeu.Fin= false;
         CaseTeleporter.NbCaseTeleporter=0;
