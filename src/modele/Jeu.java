@@ -76,6 +76,7 @@ public class Jeu extends Observable {
 
 
     public void initialisationNiveau(){
+        compteurPasHero=0;
         testfinjeu.Fin= false;
         CaseTeleporter.NbCaseTeleporter=0;
         LectureFichier tabNiveau = new LectureFichier(niveau.CheminNiveauSuivant(), SIZE_X, SIZE_Y);

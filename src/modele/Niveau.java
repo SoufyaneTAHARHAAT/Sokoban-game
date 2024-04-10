@@ -27,4 +27,6 @@ public class Niveau {
  * - Niveau 2 = glace
  * - Niveau 5 = Vitre
  * - Niveau 6 = teleporter
+ * - Niveau 7 = Aimant
+ * - Niveau 8 = Rail
  * */
